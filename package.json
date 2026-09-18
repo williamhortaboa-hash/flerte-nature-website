@@ -1,0 +1,9 @@
+{
+  "name": "flerte-nature-site",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "dependencies": {
+    "@netlify/blobs": "^9.0.0"
+  }
+}

@@ -1,0 +1,8 @@
+<!doctype html>
+<html lang="pt-MZ"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Painel do Programador | Flerte Nature</title><link rel="stylesheet" href="admin.css"></head>
+<body><main class="wrap"><div class="brand"><img src="../imagens/logo.png" alt="Flerte Nature"><div><b>FLERTE NATURE LDA</b><small>Painel administrativo</small></div></div>
+<section id="login" class="card"><h1>Acesso do programador</h1><p>Entre para gerir as fotografias da galeria e dos backgrounds.</p><form id="loginForm"><label>Utilizador<input id="username" autocomplete="username" required></label><label>Palavra-passe<input id="password" type="password" autocomplete="current-password" required></label><button>Entrar</button><div id="loginMsg" class="msg"></div></form></section>
+<section id="panel" hidden><div class="top"><div><h1>Gestão de imagens</h1><p>As imagens carregadas ficam disponíveis no site.</p></div><button id="logout" class="secondary">Sair</button></div>
+<div class="card upload"><h2>Adicionar fotografia</h2><p>Escolha uma foto. O sistema otimiza-a para web antes do envio.</p><input id="file" type="file" accept="image/*"><label>Nome da imagem<input id="filename" placeholder="ex.: limpeza-escritorio"></label><button id="uploadBtn">Adicionar imagem</button><div id="uploadMsg" class="msg"></div></div>
+<div class="card"><div class="row"><h2>Galeria / backgrounds</h2><button id="refresh" class="secondary">Atualizar</button></div><div id="gallery" class="gallery"></div><p class="hint">A fotografia marcada como <b>background</b> será usada no destaque principal do site.</p></div></section>
+<a class="back" href="../">← Voltar ao site</a></main><script src="admin.js"></script></body></html>
