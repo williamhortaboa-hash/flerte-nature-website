@@ -5,6 +5,11 @@ const store = () => getStore({ name: 'flerte-media', consistency: 'strong' });
 const cors = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'Content-Type, Authorization', 'Access-Control-Allow-Methods': 'GET, POST, DELETE, OPTIONS' };
 const json = (statusCode, body) => ({ statusCode, headers: { 'Content-Type': 'application/json; charset=utf-8', ...cors }, body: JSON.stringify(body) });
 const secret = () => process.env.ADMIN_SECRET || '';
+function safeEqual(a, b) {
+  const A = Buffer.from(String(a ?? ''));
+  const B = Buffer.from(String(b ?? ''));
+  return A.length === B.length && crypto.timingSafeEqual(A, B);
+}
 function tokenFor(user) {
   const payload = `${user}.${Date.now() + 12 * 60 * 60 * 1000}`;
   const sig = crypto.createHmac('sha256', secret()).update(payload).digest('hex');
@@ -35,8 +40,8 @@ export default async (event) => {
   if (method === 'POST' && action === 'login') {
     const { username, password } = JSON.parse(event.body || '{}');
     if (!process.env.ADMIN_USER || !process.env.ADMIN_PASSWORD || !secret()) return json(503, { error: 'O acesso administrativo ainda não foi configurado no Netlify.' });
-    const okUser = crypto.timingSafeEqual(Buffer.from(String(username || '')), Buffer.from(String(process.env.ADMIN_USER)));
-    const okPass = crypto.timingSafeEqual(Buffer.from(String(password || '')), Buffer.from(String(process.env.ADMIN_PASSWORD)));
+   const okUser = safeEqual(username, process.env.ADMIN_USER);
+const okPass = safeEqual(password, process.env.ADMIN_PASSWORD);
     if (!okUser || !okPass) return json(401, { error: 'Utilizador ou palavra-passe incorretos.' });
     return json(200, { token: tokenFor(process.env.ADMIN_USER), expiresIn: 43200 });
   }
