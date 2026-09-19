@@ -195,26 +195,25 @@ export default async (request) => {
    */
   if (method === 'GET' && action === 'image') {
     try {
-      const name = safeName(
-        url.searchParams.get('name')
-      );
+      const name = url.searchParams.get('name');
 
-      if (!name) {
-        return new Response(
-          'Nome da imagem inválido.',
-          {
-            status: 400,
-            headers: cors
-          }
-        );
-      }
+if (!name) {
+  return new Response(
+    'Nome da imagem inválido.',
+    {
+      status: 400,
+      headers: cors
+    }
+  );
+}
 
-      const blob = await store().get(
-        `images/${name}`,
-        {
-          type: 'arrayBuffer'
-        }
-      );
+const blob = await store().get(
+  `images/${name}`,
+  {
+    type: 'arrayBuffer',
+    consistency: 'strong'
+  }
+);
 
       if (!blob) {
         return new Response(
