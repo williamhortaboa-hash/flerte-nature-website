@@ -82,7 +82,6 @@ function auth(request) {
 
   return validToken(token);
 }
-
 function safeName(name) {
   return String(name || 'foto')
     .toLowerCase()
@@ -90,7 +89,6 @@ function safeName(name) {
     .replace(/-+/g, '-')
     .slice(0, 90);
 }
-
 export default async (request) => {
   if (request.method === 'OPTIONS') {
     return new Response(null, {
